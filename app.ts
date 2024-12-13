@@ -142,6 +142,7 @@ app.get("/chat", async (req: Request, res: Response) => {
     }
   } finally {
     console.log("finally", completion);
+    // completion is undefined if there was an error with fees to settle.
     if (completion === undefined) {
       completion = await openai.chat.completions.create(
         {
