@@ -158,6 +158,11 @@ app.get("/chat", async (req: Request, res: Response) => {
     }
   }
 
+  // check if completions is still undefined for some reason
+  if (completion === undefined || completion.choices === undefined) {
+    res.send("0g provider is having issues :(");
+  }
+
   const receivedContent = completion.choices[0].message.content;
   const chatID = completion.id;
   if (!receivedContent) {
@@ -175,7 +180,7 @@ app.get("/chat", async (req: Request, res: Response) => {
   );
   console.log(`Response validity: ${isValid ? "Valid" : "Invalid"}`);
 
-  console.log("data from response", completion.choices[0].message.content);
+  console.log("data from response", receivedContent);
 
-  res.send(completion.choices[0].message.content);
+  res.send(receivedContent);
 });
